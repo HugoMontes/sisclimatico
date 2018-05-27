@@ -17,6 +17,8 @@
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="<?php echo base_url();?>resources/dist/css/skins/_all-skins.min.css">
+  <!-- http://erikflowers.github.io/weather-icons/ -->
+  <link rel="stylesheet" href="<?php echo base_url();?>resources/weathericons/css/weather-icons.min.css">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -34,7 +36,7 @@
 
   <header class="main-header">
     <!-- Logo -->
-    <a href="../../index2.html" class="logo">
+    <a href="#" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>S</b>C</span>
       <!-- logo for regular state and mobile devices -->
@@ -110,43 +112,7 @@
         </div>
       </form>
       <!-- /.search form -->
-      <!-- sidebar menu: : style can be found in sidebar.less -->
-      <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">MENU PRINCIPAL</li>
-        <li><a href="#"><i class="fa fa-dashboard"></i> <span>Panel de Control</span></a></li>
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-calculator"></i>
-            <span>Calculos</span>
-            <span class="pull-right-container">
-              <span class="label label-primary pull-right">4</span>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="#"><i class="fa fa-circle-o"></i> Top Navigation</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Boxed</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Fixed</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Collapsed Sidebar</a></li>
-          </ul>
-        </li>
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-pie-chart"></i>
-            <span>Graficos</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu active">
-            <li><a href="#"><i class="fa fa-circle-o"></i> ChartJS</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Morris</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Flot</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Inline charts</a></li>
-          </ul>
-        
-        <li><a href="#"><i class="fa fa-book"></i> <span>Documentación</span></a></li>
-        <li><a href="#"><i class="fa fa-power-off text-red"></i> <span>Cerrar Sesión</span></a></li>
-      </ul>
+      <?php $this->load->view('template/sidebar'); ?>
     </section>
     <!-- /.sidebar -->
   </aside>
