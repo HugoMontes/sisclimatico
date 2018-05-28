@@ -33,5 +33,5 @@
           </ul>
         <li><a href="#"><i class="fa fa-upload"></i> <span>Subir datos</span></a></li>
         <li><a href="#"><i class="fa fa-book"></i> <span>Documentación</span></a></li>
-        <li><a href="#"><i class="fa fa-power-off text-red"></i> <span>Cerrar Sesión</span></a></li>
+        <li><a href="<?php echo site_url('logout');?>"><i class="fa fa-power-off text-red"></i> <span>Cerrar Sesión</span></a></li>
     </ul>
