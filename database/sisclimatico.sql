@@ -12,34 +12,60 @@ CREATE TABLE usuario(
    updated_at TIMESTAMP
 );
 
-CREATE TABLE anio(
+CREATE TABLE anio_agricola(
+    id SERIAL PRIMARY KEY,
+	anio INTEGER NOT NULL,
+	mes VARCHAR(50) NOT NULL,	
+	dia INTEGER NOT NULL,
+	precipitacion_pluvial NUMERIC,
+	media NUMERIC,
+	maxima NUMERIC,
+	minima NUMERIC,
+	pp_acum NUMERIC,
+	media_acum NUMERIC,
+	max_acum NUMERIC,
+	min_acum NUMERIC,
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP
+);
+
+CREATE TABLE fenomeno(
    id SERIAL PRIMARY KEY,
-   nombre VARCHAR(50) NOT NULL,
+   nombre VARCHAR(100) NOT NULL,
    created_at TIMESTAMP,
    updated_at TIMESTAMP
 );
 
-CREATE TABLE mes(
-   id SERIAL PRIMARY KEY,
-   nombre VARCHAR(50) NOT NULL,
-   created_at TIMESTAMP,
-   updated_at TIMESTAMP
+CREATE TABLE prediccion(
+    id SERIAL PRIMARY KEY,
+	id_fenomeno INTEGER REFERENCES fenomeno(id),
+	hasta DATE,
+	mes INTEGER NOT NULL,	
+	dia INTEGER NOT NULL,
+	minimo NUMERIC,
+    anios INTEGER,
+	valor_esperado NUMERIC,
+	valor_maximo NUMERIC,
+	valor_minimo NUMERIC,
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP
 );
 
-CREATE TABLE clima(
-   id SERIAL PRIMARY KEY,
-   dia INTEGER NOT NULL,
-   id_mes INTEGER REFERENCES mes(id),
-   id_anio INTEGER REFERENCES anio(id),
-   media numeric,
-   created_at TIMESTAMP,
-   updated_at TIMESTAMP
+CREATE TABLE anio_prediccion(
+    id SERIAL PRIMARY KEY,
+    id_anio_agricola INTEGER REFERENCES anio_agricola(id),
+	id_prediccion INTEGER REFERENCES prediccion(id),
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP
 );
 
 -- INSERT USUSUARIO
 INSERT INTO usuario(nombre, apellido, username, password, email, created_at, updated_at)
 VALUES('David', 'Coca', 'david', md5('654321'), 'hugo927@hotmail.com', now(), now());
+INSERT INTO usuario(nombre, apellido, username, password, email, created_at, updated_at)
+VALUES('Admin', 'Admin', 'admin', md5('s3cr3t'), 'admin@gmail.com', now(), now());
 
+/*
 -- INSERT ANIO
 INSERT INTO anio(nombre, created_at, updated_at)
 VALUES('2008 - 2009', now(), now());
@@ -57,29 +83,18 @@ INSERT INTO anio(nombre, created_at, updated_at)
 VALUES('2014 - 2015', now(), now());
 INSERT INTO anio(nombre, created_at, updated_at)
 VALUES('2015 - 2016', now(), now());
+*/
 
--- INSERT MES
-INSERT INTO mes(nombre, created_at, updated_at)
-VALUES('ENERO', now(), now());
-INSERT INTO mes(nombre, created_at, updated_at)
-VALUES('FEBRERO', now(), now());
-INSERT INTO mes(nombre, created_at, updated_at)
-VALUES('MARZO', now(), now());
-INSERT INTO mes(nombre, created_at, updated_at)
-VALUES('ABRIL', now(), now());
-INSERT INTO mes(nombre, created_at, updated_at)
-VALUES('MAYO', now(), now());
-INSERT INTO mes(nombre, created_at, updated_at)
-VALUES('JUNIO', now(), now());
-INSERT INTO mes(nombre, created_at, updated_at)
-VALUES('JULIO', now(), now());
-INSERT INTO mes(nombre, created_at, updated_at)
-VALUES('AGOSTO', now(), now());
-INSERT INTO mes(nombre, created_at, updated_at)
-VALUES('SEPTIEMBRE', now(), now());
-INSERT INTO mes(nombre, created_at, updated_at)
-VALUES('OCTUBRE', now(), now());
-INSERT INTO mes(nombre, created_at, updated_at)
-VALUES('NOVIEMBRE', now(), now());
-INSERT INTO mes(nombre, created_at, updated_at)
-VALUES('DICIEMBRE', now(), now());
+-- INSERT ANIO_AGRICOLA
+
+-- INSERT FENOMENO
+INSERT INTO fenomeno(nombre, created_at, updated_at)
+VALUES('PRECIPITACIÓN', now(), now());
+INSERT INTO fenomeno(nombre, created_at, updated_at)
+VALUES('TEMPERATURA MEDIA', now(), now());
+INSERT INTO fenomeno(nombre, created_at, updated_at)
+VALUES('TEMPERATURA MAXIMA', now(), now());
+INSERT INTO fenomeno(nombre, created_at, updated_at)
+VALUES('TEMPERATURA MINIMA', now(), now());
+
+-- INSERT PREDICCION
