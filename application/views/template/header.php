@@ -124,11 +124,11 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Panel de Control
+        <?php echo $title;?>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Sistema</a></li>
-        <li class="active">Panel de Control</li>
+        <li class="active"><?php echo $title;?></li>
       </ol>
     </section>
 

@@ -1,7 +1,7 @@
     <!-- sidebar menu: : style can be found in sidebar.less -->
     <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MENU PRINCIPAL</li>
-        <li><a href="#"><i class="fa fa-dashboard"></i> <span>Panel de Control</span></a></li>
+        <li><a href="<?php echo site_url('panel');?>"><i class="fa fa-dashboard"></i> <span>Panel de Control</span></a></li>
         <li class="treeview">
           <a href="#">
             <i class="fa fa-calculator"></i>
@@ -31,7 +31,7 @@
             <li><a href="#"><i class="fa fa-circle-o"></i> Flot</a></li>
             <li><a href="#"><i class="fa fa-circle-o"></i> Inline charts</a></li>
           </ul>
-        <li><a href="#"><i class="fa fa-upload"></i> <span>Subir datos</span></a></li>
+        <li><a href="<?php echo site_url('anioagricola');?>"><i class="fa fa-leaf"></i> <span>Año Agricola</span></a></li>
         <li><a href="#"><i class="fa fa-book"></i> <span>Documentación</span></a></li>
         <li><a href="<?php echo site_url('logout');?>"><i class="fa fa-power-off text-red"></i> <span>Cerrar Sesión</span></a></li>
     </ul>

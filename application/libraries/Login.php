@@ -10,7 +10,7 @@ class Login{
     
     public function verifyUser(){
         if(!$this->CI->session->userdata('username')){
-        redirect('login', 'refresh');
+            redirect('login', 'refresh');
         }
     }
 }

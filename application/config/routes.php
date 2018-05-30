@@ -58,3 +58,6 @@ $route['login'] = 'LoginController/loginAction';
 $route['logout'] = 'LoginController/logoutAction';
 
 $route['panel'] = 'PanelController';
+
+$route['anioagricola'] = 'AnioAgricolaController';
+$route['anioagricola/subirexcel'] = 'AnioAgricolaController/subirExcel';

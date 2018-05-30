@@ -9,7 +9,11 @@ class LoginController extends CI_Controller {
      } 
 
 	public function index(){
-        $this->load->view('login');
+        if($this->session->userdata('username')){
+            redirect(base_url('panel'));
+        }else{
+            $this->load->view('login');
+        }
     }
 
     public function loginAction(){
