@@ -15,4 +15,9 @@ class AnioAgricolaController extends CI_Controller {
         $data['title']=$this->title;
         $this->load->view('anioagricola/listado_view', $data);
     }
+
+    public function subirExcel(){
+        $data['title']=$this->title;
+        $this->load->view('anioagricola/listado_view', $data);
+    }
 }

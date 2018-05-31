@@ -12,8 +12,17 @@ CREATE TABLE usuario(
    updated_at TIMESTAMP
 );
 
+CREATE TABLE clasificacion(
+   id SERIAL PRIMARY KEY,
+   anio_ini INTEGER NOT NULL,
+   anio_fin INTEGER NOT NULL,
+   created_at TIMESTAMP,
+   updated_at TIMESTAMP
+);
+
 CREATE TABLE anio_agricola(
     id SERIAL PRIMARY KEY,
+    id_clasificacion INTEGER REFERENCES clasificacion(id),
 	anio INTEGER NOT NULL,
 	mes VARCHAR(50) NOT NULL,	
 	dia INTEGER NOT NULL,
