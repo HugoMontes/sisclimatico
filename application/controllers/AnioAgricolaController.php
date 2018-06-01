@@ -143,9 +143,16 @@ class AnioAgricolaController extends CI_Controller {
     private function validaExcel($array_data){
         $ultimo_anio=$this->aniosmodel->lastAnioAgricola();
         $ultimo_registro=count($array_data)+1;
-        if(!($array_data[2]['anio']==($ultimo_anio->anio_fin) and $array_data[2]['mes']=='JULIO' and 
+        if(!isset($ultimo_anio) and !($array_data[2]['anio']==ANIO_INI and $array_data[2]['mes']=='JULIO' and
+            $array_data[$ultimo_registro]['anio']==ANIO_FIN and $array_data[$ultimo_registro]['mes']=='JUNIO')){
+            $message='El documento que desea subir al sistema, tiene valores que no corresponden al ';
+            $message.='año agricola '.ANIO_INI.' - '.ANIO_FIN;
+            $message.='o no cumple con el formato requerido. Por favor revise los datos del documento en excel.';
+            $this->session->set_flashdata('error', $message);
+            return false;
+        }elseif(!($array_data[2]['anio']==($ultimo_anio->anio_fin) and $array_data[2]['mes']=='JULIO' and 
            $array_data[$ultimo_registro]['anio']==($ultimo_anio->anio_fin+1) and $array_data[$ultimo_registro]['mes']=='JUNIO')){
-            $message='El documento que sea subir al sistema, tiene valores que no corresponden al ';
+            $message='El documento que desea subir al sistema, tiene valores que no corresponden al ';
             $message.='año agricola '.$ultimo_anio->anio_fin.' - '.($ultimo_anio->anio_fin+1);
             $message.='o no cumple con el formato requerido. Por favor revise los datos del documento en excel.';
             $this->session->set_flashdata('error', $message);
