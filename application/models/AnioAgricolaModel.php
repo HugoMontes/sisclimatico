@@ -17,8 +17,10 @@ class AnioAgricolaModel extends CI_Model {
         }
     }
 
-    public function saveArray($array_data, $id_anio){
+    public function saveArray($array_data){
         $this->db->trans_start();
+        $this->load->model('aniosmodel');
+        $id_anio=$this->aniosmodel->saveNextAnio();
         foreach($array_data as $data){
             $data['id_anio']=$id_anio;
             $data['created_at']=date('Y-d-m H:i:s');

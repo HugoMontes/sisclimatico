@@ -9,6 +9,15 @@
                <h4 class="modal-title">Subir Archivo</h4>
             </div>
             <div class="modal-body">
+                <div class="form-group">
+                  <?php echo form_label('Año agricola', 'anio'); ?>
+                  <?php echo form_input(array(
+                                          'id'=>'anio',
+                                          'name'=>'anio',
+                                          'disabled'=>'true',
+                                          'class'=>'form-control'
+                                       ), $siguienteanio); ?>
+               </div>
                <div class="form-group">
                   <?php echo form_label('Seleccionar archivo', 'excelfile'); ?>
                   <?php echo form_upload(array(

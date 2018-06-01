@@ -11,11 +11,12 @@ class AnioAgricolaController extends CI_Controller {
         $this->load->model('anioagricolamodel');
         $this->load->model('aniosmodel');
         $this->title="Año Agricola";
-     } 
+    } 
 
 	public function index(){
         $data['anios']=$this->aniosToItems($this->aniosmodel->findAll());
         $data['diasagricolas']=$this->anioagricolamodel->findByAnio(1);
+        $data['siguienteanio']=$this->aniosmodel->nextAnioAgricola();
         $data['title']=$this->title;
         $this->load->view('anioagricola/listado_view', $data);
     }
@@ -31,8 +32,9 @@ class AnioAgricolaController extends CI_Controller {
         }else {
             $array_data=$this->excelToArray();
             $array_data=$this->calcularAcumuladas($array_data);
-            if($this->anioagricolamodel->saveArray($array_data, 1)){
-                $this->session->set_flashdata('success', 'Los datos fueron registrados exitosamente.');
+            if($this->anioagricolamodel->saveArray($array_data)){
+                $anio=$this->aniosmodel->lastAnioAgricola();
+                $this->session->set_flashdata('success', 'Los datos para el año agricola '.$anio->anio_ini.' - '.$anio->anio_fin.' fueron registrados exitosamente.');
             }else{
                 $this->session->set_flashdata('error', 'Los datos no fueron cargados correctamente, favor intetelo mas tarde.');
             }
@@ -120,10 +122,13 @@ class AnioAgricolaController extends CI_Controller {
     }
 
     private function aniosToItems($anios){
-        $options=array();
-        foreach($anios as $anio){
-            $options[$anio->id] = $anio->anio_ini.' - '.$anio->anio_fin;
-        }       
-        return $options;
+        if($anios!=null){
+            $options=array();
+            foreach($anios as $anio){
+                $options[$anio->id] = $anio->anio_ini.' - '.$anio->anio_fin;
+            }       
+            return $options;
+        }
+        return null;
     }
 }
