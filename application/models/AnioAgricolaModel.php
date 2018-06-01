@@ -1,5 +1,5 @@
 <?php
-class AnioAgricolaModel extends CI_Model {
+class Anioagricolamodel extends CI_Model {
 
     private $tablename="anio_agricola";
 
