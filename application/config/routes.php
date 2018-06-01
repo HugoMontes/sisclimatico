@@ -60,4 +60,5 @@ $route['logout'] = 'LoginController/logoutAction';
 $route['panel'] = 'PanelController';
 
 $route['anioagricola'] = 'AnioAgricolaController';
-$route['anioagricola/subir/excel'] = 'AnioAgricolaController/subirExcel';
+$route['anioagricola/subir/excel'] = 'AnioAgricolaController/subirExcelAction';
+$route['anioagricola/buscar/anio/(:num)'] = 'AnioAgricolaController/cargarAnioAgricolaAction/$1';

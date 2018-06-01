@@ -7,12 +7,12 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <?php if(isset($anios)){ ?>
-                            <form>
-                                <div class="form-group">
-                                    <label for="grupo">Año Agricola </label>
-                                    <?php echo form_dropdown('anio', $anios, '1',array('class'=>'form-control')); ?>
-                                </div>
-                            </form>
+                                <?php echo form_open('anioagricola/buscar/anio/', array('id'=>'frm-anio', 'role'=>'form', 'method'=>'get')); ?>
+                                    <div class="form-group">
+                                        <label for="grupo">Año Agricola </label>
+                                        <?php echo form_dropdown('anio', $anios, $anioselect,array('id'=>'anio','class'=>'form-control')); ?>
+                                    </div>
+                                <?php echo form_close(); ?>
                             <?php } ?>
                         </div>
                         <div class="col-sm-6">
@@ -65,3 +65,10 @@
 </div>
 <?php $this->load->view('anioagricola/nuevoexcel_modal');?>
 <?php $this->load->view('template/footer');?>
+<script>
+    $('#anio').change(function() {
+        var idanio=$(this).val();
+        var url=$('#frm-anio').attr('action')+idanio;
+        window.location = $(this).val();
+    });
+</script>

@@ -14,14 +14,20 @@ class AnioAgricolaController extends CI_Controller {
     } 
 
 	public function index(){
+        $idanio=1;
+        redirect(base_url('anioagricola/buscar/anio/'.$idanio));
+    }
+
+    public function cargarAnioAgricolaAction($idanio){
         $data['anios']=$this->aniosToItems($this->aniosmodel->findAll());
-        $data['diasagricolas']=$this->anioagricolamodel->findByAnio(1);
+        $data['diasagricolas']=$this->anioagricolamodel->findByAnio($idanio);
         $data['siguienteanio']=$this->aniosmodel->nextAnioAgricola();
         $data['title']=$this->title;
+        $data['anioselect']=$idanio;
         $this->load->view('anioagricola/listado_view', $data);
     }
 
-    public function subirExcel(){
+    public function subirExcelAction(){
         $config['upload_path'] = './resources/uploads/';
         $config['allowed_types'] = 'xlsx|xls';
         $config['max_size'] = '1024'; // 1 MB
@@ -41,7 +47,7 @@ class AnioAgricolaController extends CI_Controller {
                 }
             }
         } 
-        redirect(base_url('anioagricola')); 
+        redirect(base_url('anioagricola/buscar/anio/1'));
     }
 
     private function excelToArray(){
