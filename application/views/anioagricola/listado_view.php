@@ -46,10 +46,10 @@
                                 <td><?php echo $dia->anio; ?></td>
                                 <td><?php echo $dia->mes; ?></td>
                                 <td style="text-align:center;"><?php echo $dia->dia; ?></td>
-                                <td style="text-align:right;"><?php echo $dia->precipitacion_pluvial; ?></td>
-                                <td style="text-align:right;"><?php echo $dia->media; ?></td>
-                                <td style="text-align:right;"><?php echo $dia->maxima; ?></td>
-                                <td style="text-align:right;"><?php echo $dia->minima; ?></td>
+                                <td style="text-align:right;"><?php echo number_format($dia->precipitacion_pluvial, 2); ?></td>
+                                <td style="text-align:right;"><?php echo number_format($dia->media, 2); ?></td>
+                                <td style="text-align:right;"><?php echo number_format($dia->maxima, 2); ?></td>
+                                <td style="text-align:right;"><?php echo number_format($dia->minima, 2); ?></td>
                                 <td style="text-align:right;"><?php echo number_format($dia->pp_acum, 2); ?></td>
                                 <td style="text-align:right;"><?php echo number_format($dia->media_acum, 2); ?></td>
                                 <td style="text-align:right;"><?php echo number_format($dia->max_acum, 2); ?></td>
