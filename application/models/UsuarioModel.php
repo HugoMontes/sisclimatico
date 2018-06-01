@@ -1,5 +1,5 @@
 <?php
-class Usuariomodel extends CI_Model {
+class UsuarioModel extends CI_Model {
 
     private $tablename="usuario";
 

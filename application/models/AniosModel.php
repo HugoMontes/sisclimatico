@@ -1,5 +1,5 @@
 <?php
-class Aniosmodel extends CI_Model{
+class AniosModel extends CI_Model{
 
     private $tablename = "anios";
 
