@@ -75,8 +75,8 @@ INSERT INTO usuario(nombre, apellido, username, password, email, created_at, upd
 VALUES('Admin', 'Admin', 'admin', md5('s3cr3t'), 'admin@gmail.com', now(), now());
 
 -- INSERT CLASIFICACION
-INSERT INTO anios(anio_ini, anio_fin, created_at, updated_at)
-VALUES('2008', '2009', now(), now());
+-- INSERT INTO anios(anio_ini, anio_fin, created_at, updated_at)
+-- VALUES('2008', '2009', now(), now());
 
 /*
 -- INSERT ANIO

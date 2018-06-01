@@ -31,12 +31,14 @@ class AnioAgricolaController extends CI_Controller {
             $this->session->set_flashdata('error', $this->upload->display_errors()); 
         }else {
             $array_data=$this->excelToArray();
-            $array_data=$this->calcularAcumuladas($array_data);
-            if($this->anioagricolamodel->saveArray($array_data)){
-                $anio=$this->aniosmodel->lastAnioAgricola();
-                $this->session->set_flashdata('success', 'Los datos para el año agricola '.$anio->anio_ini.' - '.$anio->anio_fin.' fueron registrados exitosamente.');
-            }else{
-                $this->session->set_flashdata('error', 'Los datos no fueron cargados correctamente, favor intetelo mas tarde.');
+            if($this->validaExcel($array_data)){
+                $array_data=$this->calcularAcumuladas($array_data);
+                if($this->anioagricolamodel->saveArray($array_data)){
+                    $anio=$this->aniosmodel->lastAnioAgricola();
+                    $this->session->set_flashdata('success', 'Los datos para el año agricola '.$anio->anio_ini.' - '.$anio->anio_fin.' fueron registrados exitosamente.');
+                }else{
+                    $this->session->set_flashdata('error', 'Los datos no fueron cargados correctamente, favor intetelo mas tarde.');
+                }
             }
         } 
         redirect(base_url('anioagricola')); 
@@ -130,5 +132,19 @@ class AnioAgricolaController extends CI_Controller {
             return $options;
         }
         return null;
+    }
+
+    private function validaExcel($array_data){
+        $ultimo_anio=$this->aniosmodel->lastAnioAgricola();
+        $ultimo_registro=count($array_data)+1;
+        if(!($array_data[2]['anio']==($ultimo_anio->anio_fin) and $array_data[2]['mes']=='JULIO' and 
+           $array_data[$ultimo_registro]['anio']==($ultimo_anio->anio_fin+1) and $array_data[$ultimo_registro]['mes']=='JUNIO')){
+            $message='El documento que sea subir al sistema, tiene valores que no corresponden al ';
+            $message.='año agricola '.$ultimo_anio->anio_fin.' - '.($ultimo_anio->anio_fin+1);
+            $message.='o no cumple con el formato requerido. Por favor revise los datos del documento en excel.';
+            $this->session->set_flashdata('error', $message);
+            return false;
+        }
+        return true;
     }
 }
