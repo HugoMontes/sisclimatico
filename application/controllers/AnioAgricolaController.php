@@ -8,6 +8,7 @@ class AnioAgricolaController extends CI_Controller {
     function __construct(){
         parent::__construct();
         $this->login->verifyUser();
+        $this->load->model('anioagricolamodel');
         $this->title="Año Agricola";
      } 
 
@@ -17,7 +18,101 @@ class AnioAgricolaController extends CI_Controller {
     }
 
     public function subirExcel(){
-        $data['title']=$this->title;
-        $this->load->view('anioagricola/listado_view', $data);
+        $config['upload_path'] = './resources/uploads/';
+        $config['allowed_types'] = 'xlsx|xls';
+        $config['max_size'] = '1024'; // 1 MB
+        $config['file_name'] = 'upload_' . time();
+        $this->load->library('upload', $config);
+        if(!$this->upload->do_upload('excelfile')) {
+            $this->session->set_flashdata('error', $this->upload->display_errors()); 
+        }else {
+            $array_data=$this->excelToArray();
+            $array_data=$this->calcularAcumuladas($array_data);
+            if($this->anioagricolamodel->saveArray($array_data, 1)){
+                $this->session->set_flashdata('success', 'Los datos fueron registrados exitosamente.');
+            }else{
+                $this->session->set_flashdata('error', 'Los datos no fueron cargados correctamente, favor intetelo mas tarde.');
+            }
+        } 
+        redirect(base_url('anioagricola')); 
+    }
+
+    private function excelToArray(){
+        // Abriendo archivo que se ha subido al servidor
+        $file_info = $this->upload->data();
+        $filepath = "./resources/uploads/" . $file_info['file_name'];
+        $this->load->library('excel');
+        // Identificando el tipo de archivo
+        $inputFileType = PHPExcel_IOFactory::identify($filepath);
+        $objReader = PHPExcel_IOFactory::createReader($inputFileType);
+        $objPHPExcel  = $objReader->load($filepath);
+        // get only the Cell Collection
+        $cell_collection = $objPHPExcel->getActiveSheet()->getCellCollection();
+        // extract to a PHP readable array format
+        foreach ($cell_collection as $cell) {
+            $column = $objPHPExcel->getActiveSheet()->getCell($cell)->getColumn();
+            $row = $objPHPExcel->getActiveSheet()->getCell($cell)->getRow();
+            $data_value = $objPHPExcel->getActiveSheet()->getCell($cell)->getValue();
+            //header will/should be in row 1 only. of course this can be modified to suit your need.
+            if ($row == 1) {
+                $header[$row][$column] = $data_value;
+            } else {
+                // $arr_data[$row][$column] = $data_value;
+                switch($column){
+                    case 'A':
+                        $arr_data[$row]['anio'] = $data_value;
+                    break;
+                    case 'B':
+                        $arr_data[$row]['mes'] = $data_value;
+                    break;
+                    case 'C':
+                        $arr_data[$row]['dia'] = $data_value;
+                    break;
+                    case 'D':
+                        $arr_data[$row]['precipitacion_pluvial'] = $data_value;
+                    break;
+                    case 'E':
+                        $arr_data[$row]['media'] = $data_value;
+                    break;
+                    case 'F':
+                        $arr_data[$row]['maxima'] = $data_value;
+                    break;
+                    case 'G':
+                        $arr_data[$row]['minima'] = $data_value;
+                    break;
+                }
+            }
+        }
+        //print_r($header);
+        //echo '<br/><br/>';
+        //print_r($arr_data);
+        return $arr_data;
+    }
+
+    private function calcularAcumuladas($array_data){
+        $pp_acum=0;
+        $med_acum=0;
+        $max_acum=0;
+        $min_acum=0;
+        for($i=2;$i<=count($array_data)+1;$i++){
+            $pp_acum=$this->acumulada($pp_acum, $array_data[$i]['precipitacion_pluvial']);
+            $med_acum=$this->acumulada($med_acum, $array_data[$i]['media']);
+            $max_acum=$this->acumulada($max_acum, $array_data[$i]['maxima']);
+            $min_acum=$this->acumulada($min_acum, $array_data[$i]['minima']);
+            $array_data[$i]['pp_acum']=$pp_acum;
+            $array_data[$i]['media_acum']=$med_acum;
+            $array_data[$i]['max_acum']=$max_acum;
+            $array_data[$i]['min_acum']=$min_acum;
+        }        
+        return $array_data;
+    }
+
+    private function acumulada($acum, $valor){
+        if($acum==0){
+            $acum=$valor;
+        }else{
+            $acum+=$valor;
+        }
+        return $acum;
     }
 }
