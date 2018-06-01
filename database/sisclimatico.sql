@@ -12,7 +12,7 @@ CREATE TABLE usuario(
    updated_at TIMESTAMP
 );
 
-CREATE TABLE clasificacion(
+CREATE TABLE anios(
    id SERIAL PRIMARY KEY,
    anio_ini INTEGER NOT NULL,
    anio_fin INTEGER NOT NULL,
@@ -22,7 +22,7 @@ CREATE TABLE clasificacion(
 
 CREATE TABLE anio_agricola(
     id SERIAL PRIMARY KEY,
-    id_clasificacion INTEGER REFERENCES clasificacion(id),
+    id_anio INTEGER REFERENCES anios(id),
 	anio INTEGER NOT NULL,
 	mes VARCHAR(50) NOT NULL,	
 	dia INTEGER NOT NULL,
@@ -75,7 +75,7 @@ INSERT INTO usuario(nombre, apellido, username, password, email, created_at, upd
 VALUES('Admin', 'Admin', 'admin', md5('s3cr3t'), 'admin@gmail.com', now(), now());
 
 -- INSERT CLASIFICACION
-INSERT INTO clasificacion(anio_ini, anio_fin, created_at, updated_at)
+INSERT INTO anios(anio_ini, anio_fin, created_at, updated_at)
 VALUES('2008', '2009', now(), now());
 
 /*

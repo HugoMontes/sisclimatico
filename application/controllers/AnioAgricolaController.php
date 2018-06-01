@@ -9,10 +9,13 @@ class AnioAgricolaController extends CI_Controller {
         parent::__construct();
         $this->login->verifyUser();
         $this->load->model('anioagricolamodel');
+        $this->load->model('aniosmodel');
         $this->title="Año Agricola";
      } 
 
 	public function index(){
+        $data['anios']=$this->aniosToItems($this->aniosmodel->findAll());
+        $data['diasagricolas']=$this->anioagricolamodel->findByAnio(1);
         $data['title']=$this->title;
         $this->load->view('anioagricola/listado_view', $data);
     }
@@ -114,5 +117,13 @@ class AnioAgricolaController extends CI_Controller {
             $acum+=$valor;
         }
         return $acum;
+    }
+
+    private function aniosToItems($anios){
+        $options=array();
+        foreach($anios as $anio){
+            $options[$anio->id] = $anio->anio_ini.' - '.$anio->anio_fin;
+        }       
+        return $options;
     }
 }

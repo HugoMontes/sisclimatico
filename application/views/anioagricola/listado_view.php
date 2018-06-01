@@ -9,13 +9,7 @@
                             <form>
                                 <div class="form-group">
                                     <label for="grupo">Año Agricola </label>
-                                    <select class="form-control">
-                                        <option>2008 - 2009</option>
-                                        <option>2009 - 2010</option>
-                                        <option>2010 - 2011</option>
-                                        <option>2011 - 2012</option>
-                                        <option>2013 - 2014</option>
-                                    </select>
+                                    <?php echo form_dropdown('anio', $anios, '1',array('class'=>'form-control')); ?>
                                 </div>
                             </form>
                         </div>
@@ -44,19 +38,21 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <?php foreach($diasagricolas as $dia){ ?>
                         <tr>
-                            <td>2010</td>
-                            <td>JULIO</td>
-                            <td>1</td>
-                            <td>0</td>
-                            <td>7.5</td>
-                            <td>18.2</td>
-                            <td>-3.2</td>
-                            <td>0</td>
-                            <td>7.5</td>
-                            <td>18.2</td>
-                            <td>-3.2</td>
+                            <td><?php echo $dia->anio; ?></td>
+                            <td><?php echo $dia->mes; ?></td>
+                            <td style="text-align:center;"><?php echo $dia->dia; ?></td>
+                            <td style="text-align:right;"><?php echo $dia->precipitacion_pluvial; ?></td>
+                            <td style="text-align:right;"><?php echo $dia->media; ?></td>
+                            <td style="text-align:right;"><?php echo $dia->maxima; ?></td>
+                            <td style="text-align:right;"><?php echo $dia->minima; ?></td>
+                            <td style="text-align:right;"><?php echo number_format($dia->pp_acum, 2); ?></td>
+                            <td style="text-align:right;"><?php echo number_format($dia->media_acum, 2); ?></td>
+                            <td style="text-align:right;"><?php echo number_format($dia->max_acum, 2); ?></td>
+                            <td style="text-align:right;"><?php echo number_format($dia->min_acum, 2); ?></td>
                         </tr>
+                        <?php } ?>
                     </tbody>
                 </table>
             </div>
