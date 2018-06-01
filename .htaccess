@@ -1,10 +1,6 @@
-<IfModule mod_rewrite.c>
-    RewriteEngine On
-    RewriteBase /sisclimatico
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule ^(.*)$ index.php/$1 [L]
-</IfModule>
-<IfModule !mod_rewrite.c>
-    ErrorDocument 404 /sisclimatico/index.php
-</IfModule>
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} !=/favicon.ico
+RewriteCond %{HTTP_HOST} ^sisclimatico.herokuapp.com
+RewriteRule ^(.*)$ /index.php?request=$1 [L,QSA]
