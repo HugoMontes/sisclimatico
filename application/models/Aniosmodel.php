@@ -54,8 +54,4 @@ class Aniosmodel extends CI_Model{
         }
         return null;
     }
-
-    public function countAll(){
-        return $this->db->count_all($this->tablename);
-    }
 }
