@@ -12,6 +12,8 @@
   <link rel="stylesheet" href="<?php echo base_url();?>resources/bower_components/font-awesome/css/font-awesome.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="<?php echo base_url();?>resources/bower_components/Ionicons/css/ionicons.min.css">
+  <!-- bootstrap datepicker -->
+  <link rel="stylesheet" href="<?php echo base_url();?>resources/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="<?php echo base_url();?>resources/dist/css/AdminLTE.min.css">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -145,5 +147,11 @@
           <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
           <h4><i class="icon fa fa-ban"></i> Error!</h4>
           <?php echo $this->session->flashdata('error'); ?>
+        </div>
+      <?php }elseif($this->session->flashdata('warning')){?>
+        <div class="alert alert-warning alert-dismissible">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+          <h4><i class="icon fa fa-ban"></i> Advertencia!</h4>
+          <?php echo $this->session->flashdata('warning'); ?>
         </div>
       <?php } ?>

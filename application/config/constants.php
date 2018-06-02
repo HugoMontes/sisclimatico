@@ -86,3 +86,4 @@ defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest auto
 
 define("ANIO_INI", 2008);
 define("ANIO_FIN", 2009); 
+define("MIN_ANIOS", 3); 
