@@ -18,20 +18,21 @@ class PrediccionController extends CI_Controller {
         if($countanios<MIN_ANIOS){
             $this->session->set_flashdata('warning', 'Para realizar una predicción necesita como minimo los datos de tres años agricolas.');
         }
-        $data['hoy']=date("d/m/Y");        
+        $data['fecha']=date("d/m/Y");        
         $data['title']=$this->title;
         $this->load->view('prediccion/formulario_view', $data);       
     }
 
     public function calcular(){
         $countanios=$this->aniosmodel->countAll();
+        $fecha=date("d/m/Y");
         if($countanios<MIN_ANIOS){
             $this->session->set_flashdata('error', 'Para realizar una predicción necesita como minimo los datos de tres años agricolas.');
         }else{
             $fecha=$this->input->post('fecha');
             // print_r($fecha);
         }
-        $data['hoy']=$fecha;        
+        $data['fecha']=$fecha;        
         $data['title']=$this->title;
         $this->load->view('prediccion/formulario_view', $data);    
     }

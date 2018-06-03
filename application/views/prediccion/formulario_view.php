@@ -13,7 +13,7 @@
                   </div>
                   <?php echo form_input(array('id'=>'fecha',
                                              'name'=>'fecha',
-                                             'value'=>set_value('fecha',$hoy),
+                                             'value'=>set_value('fecha',$fecha),
                                              'placeholder'=>'dd/mm/aa',
                                              'class'=>'form-control pull-right')); ?>
                </div>
