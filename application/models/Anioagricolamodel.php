@@ -42,4 +42,16 @@ class Anioagricolamodel extends CI_Model {
         }
         return null;
     }
+
+    public function findByAnioMes($anio, $mes){
+        $this->db->select('id, anio, mes, dia, precipitacion_pluvial, media, maxima, minima');
+        $this->db->where('anio',$anio);
+        $this->db->where('mes',$mes);
+        $this->db->order_by('anio', 'DESC');
+        $query = $this->db->get($this->tablename);
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        }
+        return null;
+    }
 }

@@ -183,4 +183,19 @@ class AnioAgricolaController extends CI_Controller {
         }
         return null;
     }
+
+    public function graficarDatosAction(){
+        $anio_form=$this->input->post('anio');
+        $mes_form=$this->input->post('mes');
+        $result_set=$this->convertToArray($this->anioagricolamodel->findByAnioMes($anio_form, $mes_form));        
+        echo json_encode($result_set);
+    }
+
+    private function convertToArray($results){
+        $result_set=array();
+        foreach($results as $result){
+            $result_set[]=$result;
+        }
+        return $result_set;
+    }
 }

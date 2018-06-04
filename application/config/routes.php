@@ -63,7 +63,9 @@ $route['anioagricola'] = 'AnioAgricolaController';
 $route['anioagricola/subir/excel'] = 'AnioAgricolaController/subirExcelAction';
 $route['anioagricola/buscar/anio/(:num)'] = 'AnioAgricolaController/cargarAnioAgricolaAction/$1';
 $route['anioagricola/graficas'] = 'AnioAgricolaController/graficarAnioAgricolaAction';
+$route['anioagricola/graficas/datos'] = 'AnioAgricolaController/graficarDatosAction';
 
 $route['prediccion'] = 'PrediccionController';
 $route['prediccion/calcular'] = 'PrediccionController/calcularAction';
 $route['prediccion/graficas'] = 'PrediccionController/graficarPrediccionAction';
+$route['prediccion/graficas/datos'] = 'PrediccionController/graficarDatosAction';
