@@ -46,19 +46,69 @@ class PrediccionController extends CI_Controller {
             // print_r($this->dias);
             $this->calcularPromedios(1, 0, 0, 0, 0);
             //print_r($this->deanios); echo '<br/>';
-            print_r($this->abs_pp); echo ' ---- '.min($this->abs_pp).'<br/>';
-            print_r($this->abs_med); echo ' ---- '.min($this->abs_med).'<br/>';
-            print_r($this->abs_max); echo ' ---- '.min($this->abs_max).'<br/>';
-            print_r($this->abs_min); echo ' ---- '.min($this->abs_min).'<br/>';
+            
+            print_r($this->abs_pp); 
+            $minimo_pp=min($this->abs_pp);
+            echo ' ---- '.$minimo_pp.'<br/>';
+
+            print_r($this->abs_med); 
+            $minimo_med=min($this->abs_med);
+            echo ' ---- '.$minimo_med.'<br/>';
+            
+            print_r($this->abs_max); 
+            $minimo_max=min($this->abs_max);
+            echo ' ---- '.$minimo_max.'<br/>';
+            
+            print_r($this->abs_min); 
+            $minimo_min=min($this->abs_min);
+            echo ' ---- '.$minimo_min.'<br/>';
+
+            $ca_pp=$this->cuantosAnios($this->abs_pp, 0, $minimo_pp, count($this->abs_pp));
+            $ca_med=$this->cuantosAnios($this->abs_med, 0, $minimo_med, count($this->abs_med));
+            $ca_max=$this->cuantosAnios($this->abs_max, 0, $minimo_max, count($this->abs_max));
+            $ca_min=$this->cuantosAnios($this->abs_min, 0, $minimo_min, count($this->abs_min));
 
             echo '<br/>';
-            echo 'TEMP. PP - CUANTOS AÑOS: '.$this->cuantosAnios($this->abs_pp, 0, min($this->abs_pp), count($this->abs_pp));
+            echo 'TEMP. PP - CUANTOS AÑOS: '.$ca_pp;
             echo '<br/>';
-            echo 'TEMP. MEDIA - CUANTOS AÑOS: '.$this->cuantosAnios($this->abs_med, 0, min($this->abs_med), count($this->abs_med));
+            echo 'TEMP. MEDIA - CUANTOS AÑOS: '.$ca_med;
             echo '<br/>';
-            echo 'TEMP. MAX - CUANTOS AÑOS: '.$this->cuantosAnios($this->abs_max, 0, min($this->abs_max), count($this->abs_max));
+            echo 'TEMP. MAX - CUANTOS AÑOS: '.$ca_max;
             echo '<br/>';
-            echo 'TEMP. MIN - CUANTOS AÑOS: '.$this->cuantosAnios($this->abs_min, 0, min($this->abs_min), count($this->abs_min));
+            echo 'TEMP. MIN - CUANTOS AÑOS: '.$ca_min;
+            
+
+            $esperado_pp=$this->esperado($this->prom_pp, 0, $ca_pp, count($this->prom_pp));
+            $esperado_med=$this->esperado($this->prom_med, 0, $ca_med, count($this->prom_med));
+            $esperado_max=$this->esperado($this->prom_max, 0, $ca_max, count($this->prom_max));
+            $esperado_min=$this->esperado($this->prom_min, 0, $ca_min, count($this->prom_min));
+
+            echo '<br/><br/>';
+            echo 'TEMP. PP - ESPERADO: '.$esperado_pp;
+            echo '<br/>';
+            echo 'TEMP. MEDIA - ESPERADO: '.$esperado_med;
+            echo '<br/>';
+            echo 'TEMP. MAX - ESPERADO: '.$esperado_max;
+            echo '<br/>';
+            echo 'TEMP. MIN - ESPERADO: '.$esperado_min;        
+
+            echo '<br/><br/>';
+            echo 'TEMP. PP - VALOR MENOR: '.($esperado_pp-$minimo_pp);
+            echo '<br/>';
+            echo 'TEMP. MEDIA - VALOR MENOR: '.($esperado_med-$minimo_med);
+            echo '<br/>';
+            echo 'TEMP. MAX - VALOR MENOR: '.($esperado_max-$minimo_max);
+            echo '<br/>';
+            echo 'TEMP. MIN - VALOR MENOR: '.($esperado_min-$minimo_min);       
+
+            echo '<br/><br/>';
+            echo 'TEMP. PP - VALOR MAYOR: '.($esperado_pp+$minimo_pp);
+            echo '<br/>';
+            echo 'TEMP. MEDIA - VALOR MAYOR: '.($esperado_med+$minimo_med);
+            echo '<br/>';
+            echo 'TEMP. MAX - VALOR MAYOR: '.($esperado_max+$minimo_max);
+            echo '<br/>';
+            echo 'TEMP. MIN - VALOR MAYOR: '.($esperado_min+$minimo_min);     
         }
         //$data['fecha']=$fecha;        
         //$data['title']=$this->title;
@@ -116,5 +166,13 @@ class PrediccionController extends CI_Controller {
         }
         $index++;
         return $this->cuantosAnios($array_abs, $index, $min, $size);
+    }
+
+    private function esperado($array_prom, $index, $cuantos_anios, $size){
+        if($cuantos_anios==$index+2 or $index==$size-1){
+            return $array_prom[$index];
+        }
+        $index++;
+        return $this->esperado($array_prom, $index, $cuantos_anios, $size);
     }
 }
