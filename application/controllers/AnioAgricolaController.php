@@ -19,7 +19,7 @@ class AnioAgricolaController extends CI_Controller {
     }
 
     public function cargarAnioAgricolaAction($idanio){
-        $data['anios']=$this->aniosToItems($this->aniosmodel->findAll());
+        $data['anios']=$this->aniosRangeToItems($this->aniosmodel->findAll());
         $data['diasagricolas']=$this->anioagricolamodel->findByAnio($idanio);
         $data['siguienteanio']=$this->aniosmodel->nextAnioAgricola();
         $data['title']=$this->title;
@@ -129,7 +129,7 @@ class AnioAgricolaController extends CI_Controller {
         return $acum;
     }
 
-    private function aniosToItems($anios){
+    private function aniosRangeToItems($anios){
         if($anios!=null){
             $options=array();
             foreach($anios as $anio){
@@ -161,5 +161,26 @@ class AnioAgricolaController extends CI_Controller {
             return false;
         }
         return true;
+    }
+
+    public function graficarAnioAgricolaAction(){
+        $data['anios']=$this->aniosToItems($this->aniosmodel->findAll());
+        $data['anioselect']=1;
+        $data['meses']=array('JULIO'=>'JULIO','AGOSTO'=>'AGOSTO','SEPTIEMBRE'=>'SEPTIEMBRE','OCTUBRE'=>'OCTUBRE','NOVIEMBRE'=>'NOVIEMBRE','DICIEMBRE'=>'DICIEMBRE','ENERO'=>'ENERO','FEBRERO'=>'FEBRERO','MARZO'=>'MARZO','MARZO'=>'MARZO','ABRIL'=>'ABRIL','MAYO'=>'MAYO','JUNIO'=>'JUNIO');        
+        $data['messelect']='JULIO';
+        $data['title']=$this->title;
+        //print_r($this->generarDias());
+        $this->load->view('graficas/anioagricola_view', $data);  
+    }
+
+    private function aniosToItems($anios){
+        if($anios!=null){
+            $options=array();
+            foreach($anios as $anio){
+                $options[$anio->anio_ini] = $anio->anio_ini;
+            }       
+            return $options;
+        }
+        return null;
     }
 }

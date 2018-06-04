@@ -114,10 +114,3 @@
 <?php } ?>
 
 <?php $this->load->view('template/footer');?>
-<script>
-    //Date picker
-    $('#fecha').datepicker({
-        autoclose: true,
-        language: 'es'
-    });
-</script>

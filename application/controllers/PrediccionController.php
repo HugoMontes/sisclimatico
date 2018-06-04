@@ -175,4 +175,11 @@ class PrediccionController extends CI_Controller {
         $index++;
         return $this->esperado($array_prom, $index, $cuantos_anios, $size);
     }
+
+    public function graficarPrediccionAction(){
+        $data['meses']=array('JULIO'=>'JULIO','AGOSTO'=>'AGOSTO','SEPTIEMBRE'=>'SEPTIEMBRE','OCTUBRE'=>'OCTUBRE','NOVIEMBRE'=>'NOVIEMBRE','DICIEMBRE'=>'DICIEMBRE','ENERO'=>'ENERO','FEBRERO'=>'FEBRERO','MARZO'=>'MARZO','MARZO'=>'MARZO','ABRIL'=>'ABRIL','MAYO'=>'MAYO','JUNIO'=>'JUNIO');        
+        $data['messelect']='JULIO';
+        $data['title']='Grafica Predicciones';
+        $this->load->view('graficas/predicciones_view', $data);  
+    }
 }
