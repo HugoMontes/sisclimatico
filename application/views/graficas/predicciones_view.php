@@ -6,7 +6,7 @@
     <div class="col-md-6">
         <div class="box box-primary">
             <div class="box-body">
-                <?php echo form_open('prediccion/calcular', array('role'=>'form')); ?>
+                <?php echo form_open('prediccion/graficas/datos', array('role'=>'form')); ?>
                     <div class="form-group">
                         <?php echo form_label('Seleccionar Mes:', 'mes'); ?>
                         <div class="input-group date">

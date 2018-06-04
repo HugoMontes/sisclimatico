@@ -50,7 +50,6 @@ class PrediccionController extends CI_Controller {
         if($countanios<MIN_ANIOS){
             $this->session->set_flashdata('error', 'Para realizar una predicción necesita como minimo los datos de tres años agricolas.');
         }else{
-            // $fecha=$this->input->post('fecha');
             $mes_form=$this->input->post('mes');
             $dia_form=$this->input->post('dia');
 
@@ -181,5 +180,12 @@ class PrediccionController extends CI_Controller {
         $data['messelect']='JULIO';
         $data['title']='Grafica Predicciones';
         $this->load->view('graficas/predicciones_view', $data);  
+    }
+
+    public function graficarDatosAction(){
+        $mes_form=$this->input->post('mes');
+        echo $mes_form;
+        // $result_set=$this->convertToArray($this->anioagricolamodel->findByAnioMes($anio_form, $mes_form));        
+        // echo json_encode($result_set);
     }
 }
