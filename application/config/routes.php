@@ -67,5 +67,6 @@ $route['anioagricola/graficas/datos'] = 'AnioAgricolaController/graficarDatosAct
 
 $route['prediccion'] = 'PrediccionController';
 $route['prediccion/calcular'] = 'PrediccionController/calcularAction';
+$route['prediccion/calcular/media'] = 'PrediccionController/calcularMediaFenomenoAction';
 $route['prediccion/graficas'] = 'PrediccionController/graficarPrediccionAction';
 $route['prediccion/graficas/datos'] = 'PrediccionController/graficarDatosAction';

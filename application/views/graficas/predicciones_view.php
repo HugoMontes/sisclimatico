@@ -6,7 +6,7 @@
     <div class="col-md-6">
         <div class="box box-primary">
             <div class="box-body">
-                <?php echo form_open('prediccion/graficas/datos', array('role'=>'form')); ?>
+                <?php echo form_open('prediccion/graficas/datos', array('id'=>'frm-prediccion','role'=>'form')); ?>
                     <div class="form-group">
                         <?php echo form_label('Seleccionar Mes:', 'mes'); ?>
                         <div class="input-group date">
@@ -18,7 +18,7 @@
                     </div>
                     <div class="form-group">
                         <div style="text-align: right;">
-                            <?php echo form_submit(array('value'=>'Graficar','class'=>'btn btn-primary')); ?>
+                            <?php echo form_submit(array('id'=>'btn-graficar', 'value'=>'Graficar','class'=>'btn btn-primary')); ?>
                         </div>
                     </div>
                 <?php echo form_close(); ?>
@@ -51,26 +51,38 @@
 <script src="<?php echo base_url();?>resources/bower_components/raphael/raphael.min.js"></script>
 <script src="<?php echo base_url();?>resources/bower_components/morris.js/morris.min.js"></script>
 <script>
-    // LINE CHART
-    var line = new Morris.Line({
-      element: 'line-chart',
-      resize: true,
-      data: [
-        {y: '2011 Q1', item1: 2666},
-        {y: '2011 Q2', item1: 2778},
-        {y: '2011 Q3', item1: 4912},
-        {y: '2011 Q4', item1: 3767},
-        {y: '2012 Q1', item1: 6810},
-        {y: '2012 Q2', item1: 5670},
-        {y: '2012 Q3', item1: 4820},
-        {y: '2012 Q4', item1: 15073},
-        {y: '2013 Q1', item1: 10687},
-        {y: '2013 Q2', item1: 8432}
-      ],
-      xkey: 'y',
-      ykeys: ['item1'],
-      labels: ['Item 1'],
-      lineColors: ['#3c8dbc'],
-      hideHover: 'auto'
+    $('#btn-graficar').on('click', function(event){
+        event.preventDefault();
+        /*
+        $("#line-pp").empty();
+        $("#box-graficas").show();
+        $("#line-media").empty();
+        $("#line-maxima").empty();
+        $("#line-minima").empty();
+        */
+        var url=$('#frm-prediccion').attr('action');
+        $.ajax({
+            url: url,
+            dataType: 'JSON',
+            type: 'POST',
+            data: $("#frm-prediccion").serialize(),
+                success: function(response) {
+                    console.log(response);
+                    /*
+                        var line = new Morris.Line({
+                            element: 'line-pp',
+                            resize: true,
+                            data: response,
+                            parseTime: false,
+                            xkey: 'dia',
+                            ykeys: ['precipitacion_pluvial'],
+                            labels: ['Precipitacion Pluvial'],
+                            xLabels: 'Dia',
+                            lineColors: ['#00c0ef'],
+                            hideHover: 'auto'
+                        });
+                    */
+            }
+        });
     });
 </script>

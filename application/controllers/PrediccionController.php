@@ -43,7 +43,6 @@ class PrediccionController extends CI_Controller {
         }else{
             $mes_form=$this->input->post('mes');
             $dia_form=$this->input->post('dia');
-            // print_r($this->dias);
             $data=$this->prediccion->obtenerValoresPrediccion($this->anioagricolamodel->findByMesDia($mes_form, $dia_form));
         }
         $data['meses']=array('JULIO'=>'JULIO','AGOSTO'=>'AGOSTO','SEPTIEMBRE'=>'SEPTIEMBRE','OCTUBRE'=>'OCTUBRE','NOVIEMBRE'=>'NOVIEMBRE','DICIEMBRE'=>'DICIEMBRE','ENERO'=>'ENERO','FEBRERO'=>'FEBRERO','MARZO'=>'MARZO','MARZO'=>'MARZO','ABRIL'=>'ABRIL','MAYO'=>'MAYO','JUNIO'=>'JUNIO');        
@@ -64,8 +63,22 @@ class PrediccionController extends CI_Controller {
 
     public function graficarDatosAction(){
         $mes_form=$this->input->post('mes');
-        echo $mes_form;
+        $data=array();
+        for($i=1;$i<=30;$i++){
+            $data[]=$this->prediccion->obtenerValoresPrediccion($this->anioagricolamodel->findByMesDia($mes_form, $i));
+        }
+        // print_r($data);
+        echo json_encode($data);
         // $result_set=$this->convertToArray($this->anioagricolamodel->findByAnioMes($anio_form, $mes_form));        
         // echo json_encode($result_set);
     }
+
+    public function calcularMediaFenomenoAction(){
+        $mes_form=$this->input->post('mes');
+        $dia_form=$this->input->post('dia');
+        $fen_form=$this->input->post('fenomeno');
+        //echo json_encode($this->anioagricolamodel->findByMesDiaFenomeno($mes_form, $dia_form, TEMPERATURA_MEDIA));
+        echo json_encode($this->prediccion->obtenerValoresPrediccionPorFenomeno($this->anioagricolamodel->findByMesDiaFenomeno($mes_form, $dia_form, $fen_form)));
+    }
+
 }

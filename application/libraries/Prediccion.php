@@ -4,20 +4,30 @@ defined("BASEPATH") or die("El acceso al script no está permitido");
 class Prediccion{
 
     private $dias;
-    private $prom_pp=array();
-    private $prom_med=array();
-    private $prom_max=array();
-    private $prom_min=array();
-    private $abs_pp=array();
-    private $abs_med=array();
-    private $abs_max=array();
-    private $abs_min=array();
+    private $prom;
+    private $prom_pp;
+    private $prom_med;
+    private $prom_max;
+    private $prom_min;
+    private $abs;
+    private $abs_pp;
+    private $abs_med;
+    private $abs_max;
+    private $abs_min;
 
     public function __construct(){
     }
     
     public function obtenerValoresPrediccion($dias){
         $this->dias=$dias;
+        $this->prom_pp=array();
+        $this->prom_med=array();
+        $this->prom_max=array();
+        $this->prom_min=array();
+        $this->abs_pp=array();
+        $this->abs_med=array();
+        $this->abs_max=array();
+        $this->abs_min=array();
         $this->calcularPromedios(1, 0, 0, 0, 0);
             //print_r($this->deanios); echo '<br/>';
             
@@ -112,4 +122,31 @@ class Prediccion{
         return $this->esperado($array_prom, $index, $cuantos_anios, $size);
     }
 
+    public function obtenerValoresPrediccionPorFenomeno($dias){
+        $this->dias=$dias;
+        $this->prom=array();
+        $this->abs=array();
+        $this->calcularPromedioFenomeno(1, 0);
+        $minimo=min($this->abs);
+        $ca=$this->cuantosAnios($this->abs, 0, $minimo, count($this->abs));            
+        $esperado=$this->esperado($this->prom, 0, $ca, count($this->prom));
+        $data['cuantos_anios'] = $ca;           
+        $data['esperado'] = $esperado;           
+        $data['menor'] = $esperado - $minimo;
+        $data['mayor'] = $esperado + $minimo;
+        return $data;
+    }
+
+    private function calcularPromedioFenomeno($i, $sum){
+        if($i<count($this->dias)){
+            $sum+=$this->dias[$i]->fenomeno;
+            if($i!=1){
+                $round=round($sum/$i, 1);
+                array_push($this->prom, $round);
+                array_push($this->abs, abs($round - $this->dias[0]->fenomeno));
+            }
+            $i++;
+            $this->calcularPromedioFenomeno($i, $sum);
+        }
+    }
 }
