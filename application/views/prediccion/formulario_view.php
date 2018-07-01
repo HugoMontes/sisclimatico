@@ -58,51 +58,51 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <th>PRECIPITACIÓN</th>
+                            <th>PRECIPITACIÓN (mm)</th>
                             <td style="text-align:right;">
-                                <?php echo number_format($menores['pp'], 1); ?>
+                                <?php echo number_format($menores['pp'], 1); ?> mm
                             </td>
                             <td style="text-align:right;">
-                                <?php echo number_format($esperados['pp'], 1); ?>
+                                <?php echo number_format($esperados['pp'], 1); ?> mm
                             </td>
                             <td style="text-align:right;">
-                                <?php echo number_format($mayores['pp'], 1); ?>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>TEMPERATURA MAXIMA</th>
-                            <td style="text-align:right;">
-                                <?php echo number_format($menores['max'], 1); ?>
-                            </td>
-                            <td style="text-align:right;">
-                                <?php echo number_format($esperados['max'], 1); ?>
-                            </td>
-                            <td style="text-align:right;">
-                                <?php echo number_format($mayores['max'], 1); ?>
+                                <?php echo number_format($mayores['pp'], 1); ?> mm
                             </td>
                         </tr>
                         <tr>
-                            <th>TEMPERATURA MEDIA</th>
+                            <th>TEMPERATURA MAXIMA (°C)</th>
                             <td style="text-align:right;">
-                                <?php echo number_format($menores['med'], 1); ?>
+                                <?php echo number_format($menores['max'], 1); ?> °C
                             </td>
                             <td style="text-align:right;">
-                                <?php echo number_format($esperados['med'], 1); ?>
+                                <?php echo number_format($esperados['max'], 1); ?> °C
                             </td>
                             <td style="text-align:right;">
-                                <?php echo number_format($mayores['med'], 1); ?>
+                                <?php echo number_format($mayores['max'], 1); ?> °C
                             </td>
                         </tr>
                         <tr>
-                            <th>TEMPERATURA MINIMA</th>
+                            <th>TEMPERATURA MEDIA (°C)</th>
                             <td style="text-align:right;">
-                                <?php echo number_format($menores['min'], 1); ?>
+                                <?php echo number_format($menores['med'], 1); ?> °C
                             </td>
                             <td style="text-align:right;">
-                                <?php echo number_format($esperados['min'], 1); ?>
+                                <?php echo number_format($esperados['med'], 1); ?> °C
                             </td>
                             <td style="text-align:right;">
-                                <?php echo number_format($mayores['min'], 1); ?>
+                                <?php echo number_format($mayores['med'], 1); ?> °C
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>TEMPERATURA MINIMA (°C)</th>
+                            <td style="text-align:right;">
+                                <?php echo number_format($menores['min'], 1); ?> °C
+                            </td>
+                            <td style="text-align:right;">
+                                <?php echo number_format($esperados['min'], 1); ?> °C
+                            </td>
+                            <td style="text-align:right;">
+                                <?php echo number_format($mayores['min'], 1); ?> °C
                             </td>
                         </tr>
                     </tbody>

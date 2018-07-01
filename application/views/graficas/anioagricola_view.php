@@ -47,7 +47,6 @@
     <div class="box box-info">
         <div class="box-header with-border">
             <h3 class="box-title">GRAFICA DE PRECIPITACION PLUVIAL</h3>
-
             <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse">
                     <i class="fa fa-minus"></i>
@@ -57,15 +56,13 @@
                 </button>
             </div>
         </div>
-        <div class="box-body chart-responsive">
-            <div class="chart" id="line-pp" style="height: 300px;"></div>
+        <div id="box-pp" class="box-body chart-responsive">
+            <canvas id="line-pp"></canvas>
         </div>
-        <!-- /.box-body -->
     </div>
     <div class="box box-danger">
         <div class="box-header with-border">
             <h3 class="box-title">GRAFICA DE TEMPERATURA MAXIMA</h3>
-
             <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse">
                     <i class="fa fa-minus"></i>
@@ -75,10 +72,9 @@
                 </button>
             </div>
         </div>
-        <div class="box-body chart-responsive">
-            <div class="chart" id="line-maxima" style="height: 300px;"></div>
+        <div id="box-maxima" class="box-body chart-responsive">
+            <canvas id="line-maxima"></canvas>
         </div>
-        <!-- /.box-body -->
     </div>
     <div class="box box-success">
         <div class="box-header with-border">
@@ -93,10 +89,9 @@
                 </button>
             </div>
         </div>
-        <div class="box-body chart-responsive">
-            <div class="chart" id="line-media" style="height: 300px;"></div>
+        <div id="box-media" class="box-body chart-responsive">
+            <canvas id="line-media"></canvas>
         </div>
-        <!-- /.box-body -->
     </div>
     <div class="box box-primary">
         <div class="box-header with-border">
@@ -111,25 +106,54 @@
                 </button>
             </div>
         </div>
-        <div class="box-body chart-responsive">
-            <div class="chart" id="line-minima" style="height: 300px;"></div>
+        <div id="box-minima" class="box-body chart-responsive">
+            <canvas id="line-minima"></canvas>
         </div>
-        <!-- /.box-body -->
     </div>
 </div>
 <?php $this->load->view('template/footer');?>
-<!-- Morris.js charts -->
-<script src="<?php echo base_url();?>resources/bower_components/raphael/raphael.min.js"></script>
-<script src="<?php echo base_url();?>resources/bower_components/morris.js/morris.min.js"></script>
+<!-- Chart.js charts -->
+<script src="<?php echo base_url();?>resources/bower_components/chartjs/Chart.bundle.min.js"></script>
 
 <script>
+    var label=[], pp=[], max=[], min=[], med=[];
+
+    var chartColors = {
+        precipitacion: 'rgb(0,192,239)',
+        precipitacion_fill: 'rgb(204,229,255)',
+        maxima: 'rgb(221,75,57)',
+        maxima_fill: 'rgb(248,215,218)',
+        media: 'rgb(0,166,90)',
+        media_fill: 'rgb(212,237,218)',
+        minima: 'rgb(60,141,188)',
+        minima_fill: 'rgb(161,204,228)',
+    };
+
+    function responseToArrays(response){
+        label=[], pp=[], max=[], min=[], med=[];
+        for(var i=0;i<response.length;i++){
+            label.push(response[i].dia+' / '+response[i].mes);
+            pp.push(response[i].precipitacion_pluvial);
+            max.push(response[i].maxima);
+            min.push(response[i].minima);
+            med.push(response[i].media);
+        }
+    }
+
+
     $('#btn-graficar').on('click', function(event){
         event.preventDefault();
-        $("#line-pp").empty();
-        $("#box-graficas").show();
-        $("#line-media").empty();
-        $("#line-maxima").empty();
-        $("#line-minima").empty();
+
+        $("#box-graficas").show(); 
+        $("#line-pp").remove();
+        $('#box-pp').append('<canvas id="line-pp"></canvas>');
+        $("#line-media").remove();
+        $('#box-media').append('<canvas id="line-media"></canvas>');
+        $("#line-maxima").remove();
+        $('#box-maxima').append('<canvas id="line-maxima"></canvas>');
+        $("#line-minima").remove();
+        $('#box-minima').append('<canvas id="line-minima"></canvas>');
+
         var url=$('#frm-anioagricola').attr('action');
         $.ajax({
             url: url,
@@ -137,53 +161,125 @@
             type: 'POST',
             data: $("#frm-anioagricola").serialize(),
                 success: function(response) {
-                        var line = new Morris.Line({
-                            element: 'line-pp',
-                            resize: true,
-                            data: response,
-                            parseTime: false,
-                            xkey: 'dia',
-                            ykeys: ['precipitacion_pluvial'],
-                            labels: ['Precipitacion Pluvial'],
-                            xLabels: 'Dia',
-                            lineColors: ['#00c0ef'],
-                            hideHover: 'auto'
+                        responseToArrays(response);
+                        var ctx_pp = document.getElementById("line-pp").getContext('2d');
+                        var myLineChart = new Chart(ctx_pp, {
+                            type: 'line',
+                            data: {
+                                datasets: [{
+                                    label: 'Precipitación Pluvial',
+                                    backgroundColor: chartColors.precipitacion_fill,
+                                    borderColor: chartColors.precipitacion,
+                                    data: pp
+                                }],
+                                labels: label
+                            }, 
+                            options : {
+                            scales: {
+                                    yAxes: [{
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: 'Precipitacion Pluvial (mm)'
+                                    }
+                                    }],
+                                    xAxes: [{
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: 'días'
+                                    }
+                                    }],
+                                }
+                            }           
                         });
-                        var line = new Morris.Line({
-                            element: 'line-maxima',
-                            resize: true,
-                            data: response,
-                            parseTime: false,
-                            xkey: 'dia',
-                            ykeys: ['maxima'],
-                            labels: ['Maxima'],
-                            xLabels: 'Dia',
-                            lineColors: ['#dd4b39'],
-                            hideHover: 'auto'
+
+                        var ctx_maxima = document.getElementById("line-maxima").getContext('2d');
+                        var myLineChart = new Chart(ctx_maxima, {
+                            type: 'line',
+                            data: {
+                                datasets: [{
+                                    label: 'Temperatura Máxima',
+                                    backgroundColor: chartColors.maxima_fill,
+                                    borderColor: chartColors.maxima,
+                                    data: max
+                                }],
+                                labels: label
+                            }, 
+                            options : {
+                            scales: {
+                                    yAxes: [{
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: 'Temperatura (°C)'
+                                    }
+                                    }],
+                                    xAxes: [{
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: 'días'
+                                    }
+                                    }],
+                                }
+                            }           
                         });
-                        var line = new Morris.Line({
-                            element: 'line-media',
-                            resize: true,
-                            data: response,
-                            parseTime: false,
-                            xkey: 'dia',
-                            ykeys: ['media'],
-                            labels: ['Media'],
-                            xLabels: 'Dia',
-                            lineColors: ['#00a65a'],
-                            hideHover: 'auto'
+
+                        var ctx_media = document.getElementById("line-media").getContext('2d');
+                        var myLineChart = new Chart(ctx_media, {
+                            type: 'line',
+                            data: {
+                                datasets: [{
+                                    label: 'Temperatura Media',
+                                    backgroundColor: chartColors.media_fill,
+                                    borderColor: chartColors.media,
+                                    data: med
+                                }],
+                                labels: label
+                            }, 
+                            options : {
+                            scales: {
+                                    yAxes: [{
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: 'Temperatura (°C)'
+                                    }
+                                    }],
+                                    xAxes: [{
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: 'días'
+                                    }
+                                    }],
+                                }
+                            }           
                         });
-                        var line = new Morris.Line({
-                            element: 'line-minima',
-                            resize: true,
-                            data: response,
-                            parseTime: false,
-                            xkey: 'dia',
-                            ykeys: ['minima'],
-                            labels: ['Minima'],
-                            xLabels: 'Dia',
-                            lineColors: ['#3c8dbc'],
-                            hideHover: 'auto'
+
+                        var ctx_minima = document.getElementById("line-minima").getContext('2d');
+                        var myLineChart = new Chart(ctx_minima, {
+                            type: 'line',
+                            data: {
+                                datasets: [{
+                                    label: 'Temperatura Mínima',
+                                    backgroundColor: chartColors.minima_fill,
+                                    borderColor: chartColors.minima,
+                                    data: min
+                                }],
+                                labels: label
+                            }, 
+                            options : {
+                            scales: {
+                                    yAxes: [{
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: 'Temperatura (°C)'
+                                    }
+                                    }],
+                                    xAxes: [{
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: 'días'
+                                    }
+                                    }],
+                                }
+                            }           
                         });
             }
         });

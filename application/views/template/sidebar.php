@@ -16,6 +16,5 @@
             <li><a href="<?php echo site_url('prediccion/graficas');?>"><i class="fa fa-circle-o"></i> Predicciones</a></li>
           </ul>
         <li><a href="<?php echo site_url('anioagricola');?>"><i class="fa fa-leaf"></i> <span>Año Agricola</span></a></li>
-        <li><a href="#"><i class="fa fa-book"></i> <span>Documentación</span></a></li>
         <li><a href="<?php echo site_url('logout');?>"><i class="fa fa-power-off"></i> <span>Cerrar Sesión</span></a></li>
     </ul>

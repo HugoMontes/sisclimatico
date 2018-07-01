@@ -77,6 +77,7 @@
 <?php $this->load->view('prediccion_modal');?>
 <?php $this->load->view('template/footer'); ?>
 <script>
+  var unidad;
   function abrirModal(){
     $('.box-resultado').hide();
     $('#modal-prediccion').modal({
@@ -89,6 +90,7 @@
     $('#modal-prediccion').attr('class','modal modal-info fade');
     $('.modal-title').text('Precipitación Pluvial');
     $('#btn-enviar-prediccion').attr('fenomeno','1');
+    unidad='mm';
     abrirModal();
   });
   $('.btn-media').on('click', function(event){
@@ -96,6 +98,7 @@
     $('#modal-prediccion').attr('class','modal modal-warning fade');
     $('.modal-title').text('Temperatura Media');
     $('#btn-enviar-prediccion').attr('fenomeno','3');
+    unidad='°C';
     abrirModal();
   });
   $('.btn-maxima').on('click', function(event){
@@ -103,6 +106,7 @@
     $('#modal-prediccion').attr('class','modal modal-danger fade');
     $('.modal-title').text('Temperatura Maxima');
     $('#btn-enviar-prediccion').attr('fenomeno','4');
+    unidad='°C';
     abrirModal();
   });
   $('.btn-minima').on('click', function(event){
@@ -110,6 +114,7 @@
     $('#modal-prediccion').attr('class','modal modal-success fade');
     $('.modal-title').text('Temperatura Minima');
     $('#btn-enviar-prediccion').attr('fenomeno','2');
+    unidad='°C';
     abrirModal();
   });
 
@@ -125,7 +130,7 @@
                 success: function(response) {
                   $('.box-resultado').show();
                   var title=$('.modal-title').text();
-                  $('.body-resultado').html('La mejor predicción es con promedio de '+response.cuantos_anios+' años. Se espera una '+title+' de '+response.esperado+' variando desde '+response.menor+' hasta '+response.mayor);       
+                  $('.body-resultado').html('La mejor predicción es con promedio de '+response.cuantos_anios+' años. Se espera una '+title+' de '+response.esperado+unidad+' variando desde '+response.menor+unidad+' hasta '+response.mayor+unidad+'.');       
                 }
     });
   });
